@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import com.jcraft.jsch.Session;
+
 /**
  * Servlet implementation class HostsServlet
  */
@@ -58,7 +60,6 @@ public class HostsServlet extends HttpServlet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	
 		out.print(responsestr.toString());	
 	}

@@ -1,0 +1,5 @@
+127.0.0.1 - - [01/Apr/2016:02:20:31 +0530] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [01/Apr/2016:02:20:32 +0530] "GET /SDNWeb/HostsServlet HTTP/1.1" 200 167
+0:0:0:0:0:0:0:1 - - [01/Apr/2016:02:21:31 +0530] "GET /SDNWeb/PortsServlet HTTP/1.1" 500 1775
+0:0:0:0:0:0:0:1 - - [01/Apr/2016:02:22:42 +0530] "GET /SDNWeb/PortsServlet HTTP/1.1" 200 -
+0:0:0:0:0:0:0:1 - - [01/Apr/2016:02:22:53 +0530] "GET /SDNWeb/PortsServlet HTTP/1.1" 200 -
