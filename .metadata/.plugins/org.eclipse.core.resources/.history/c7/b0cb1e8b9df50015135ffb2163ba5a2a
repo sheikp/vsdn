@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SDN</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+</head>
+<body>
+
+		
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+			 <script>
+            $("input[name='demo2']").TouchSpin({
+                min: 0,
+                max: 1000,
+                stepinterval: 1,
+                maxboostedstep: 1000,
+                prefix: '$'
+            });
+        </script>
+			 <form class="form-horizontal" role="form">
+			 
+			 <div class="dropdown">
+  				<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Port
+ 				 <span class="caret"></span></button>
+ 				 <ul class="dropdown-menu">
+    				<li><a href="#">port1</a></li>
+    				<li><a href="#">port2</a></li>
+    				<li><a href="#">port3</a></li>
+  				</ul>
+			</div>			
+            <div class="form-group">
+                <label for="demo2" class="col-md-4 control-label">Assign speed for the selected port</label> <input id="demo2" type="text" value="0" name="demo2" class="col-md-8 form-control">
+            </div>
+            <button type="button" class="btn btn-info">Apply</button>
+        	</form>
+
+
+</body>
+</html>

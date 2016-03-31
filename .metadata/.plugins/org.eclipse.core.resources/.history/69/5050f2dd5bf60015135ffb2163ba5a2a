@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app>
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>        
+    	<script src="Hello.js"></script>
+    	<script>
+//     	$(document).ready(function() {
+// 		    $.ajax({
+// 		        url: "http://10.76.190.84:8181/onos/v1/devices"
+// 		    }).then(function(data) {
+// 		       $('.greeting-id').append(data.devices.id);
+// 		       $('.greeting-content').append(data.devices.type);
+// 		    });
+// 		});
+    	
+    	
+    	 $(document).ready(function () {
+             $.ajax({
+            	 url: "http://10.76.190.84:8181/onos/v1/devices",
+                 type: "GET", //This is what you should chage
+               //  dataType: "application/json; charset=utf-8",
+                 username: "karaf", // Most SAP web services require credentials
+                 password: "karaf",
+               //  processData: false,
+               //  contentType: "application/json",
+                 success: function () {
+                     alert("success");
+                 },
+                 error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+                     alert(xhr.status);
+                     alert(xhr.responseText);
+                 },
+             });
+         });
+    	</script>
+	</head>
+
+	<body>
+		<p class="greeting-id">The ID is </p>
+        <p class="greeting-content">The content is </p>
+         
+		<div ng-controller="Hello">			
+			<p>The content is {{greeting.id}}</p>
+			
+		</div>
+		
+	</body>
+</html>

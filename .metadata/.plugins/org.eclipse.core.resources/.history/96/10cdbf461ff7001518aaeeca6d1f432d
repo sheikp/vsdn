@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="assets/css/main.css" />
+	 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>     
+<script>
+
+$(document).ready(function(){	
+	var sdeviceid = '';
+	$.ajax({			
+   	 	url: "http://localhost:8080/SDNWeb/DevicesServlet",
+        type: "GET",               
+        success: function (data) { 
+        	var obj = $.parseJSON(data);
+        	var table = '';
+        	$.each(obj, function() {
+                table += '<h4>AS4600-54T</h4>';
+                table += '<span><b>Type:</b> ' + this[0]['id'] + ' <b>Hardware:</b> ' + this[0]['hw'] + '</span>';                
+                $('#deviceid').value = this[0]['id'];   
+                sdeviceid += this[0]['id']; 
+            });        	
+        	table += '<br> <br> <img src="images/switch.jpg" width="300px">';
+        	
+            $('#jsonDevice').html(table);
+        },
+        error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+            alert(xhr.statusText);
+            alert(xhr.responseText);
+        }
+    });
+	alert($('#deviceid').val());
+	alert('test ' + sdeviceid);
+	$.ajax({			
+   	 	url: "http://localhost:8080/SDNWeb/PortsServlet",
+        type: "GET",               
+        data: {"deviceid": $('#deviceid').value},
+        success: function (data) { 
+        	var obj = $.parseJSON(data);
+        	var table = '';
+        	$.each(obj, function() {                
+                table += '<span><b>Type:</b> ' + this[0]['type'] + ' <b>Hardware:</b> ' + this[0]['hw'] + '</span>'; 
+            });        	
+        	table += '</table> <br> <br> <img src="images/switch.jpg" width="300px">';        	
+            $('#jsonPorts').html(table);
+        },
+        error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+            alert(xhr.statusText);
+            alert(xhr.responseText);
+        }
+    });
+	     
+});
+	
+</script>
+</head>
+
+<body>
+	<div id="bw" style="padding:30px; background-color:white; width:100%; height:450px;  ">
+		<div style="color:maroon"><h3>Device</h3></div>
+		<input id=deviceid type=hidden value='' />
+		<div id="jsonDevice" style="width:50%; float:left"></div>
+		<div id="jsonPorts" style="width:50%; float:left"></div>
+	</div>
+</body>
+</html>

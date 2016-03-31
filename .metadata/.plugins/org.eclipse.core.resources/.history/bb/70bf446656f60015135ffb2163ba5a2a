@@ -1,0 +1,11 @@
+	function Hello($scope, $http) {
+		alert("hi");
+    	    $http.get('http://10.76.190.84:8181/onos/v1/devices').
+    	        success(function(data) {
+    	            $scope.greeting = data;
+    	        });
+    	    $http.get('http://10.76.190.84:8181/onos/v1/devices').
+	        error(function(status) {
+	           alert(status)
+	        });
+    	}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html ng-app>
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>        
+    	<script src="Hello.js"></script>
+    	<script>
+//     	$(document).ready(function() {    		
+// 		    $.ajax({
+// 		    	xhrFields: {
+// 		            withCredentials: true
+// 		        },
+// 		        beforeSend: function (xhr) {
+// 		            xhr.setRequestHeader('Authorization', 'Basic ' + btoa('karaf:karaf'));
+// 		        },
+// 		        url: "http://10.76.190.84:8181/onos/v1/devices"				
+// 		    }).then(function(data) {		    
+// 		    	alert(data);
+// 		       $('.greeting-id').append(data.devices.id);
+// 		       $('.greeting-content').append(data.devices.type);
+// 		    });
+// 		});
+    	
+    	
+    	 $(document).ready(function () {
+//     		 $.ajaxSetup({
+//     			    headers: { 'Authorization': 'Basic ' + btoa('karaf:karaf')}
+//     			}); 
+			 atob('karaf:karaf');
+             $.ajax({
+            	 xhrFields: {
+            	        withCredentials: true
+            	    },
+            	    beforeSend: function (xhr) {
+            	        xhr.setRequestHeader('Authorization', 'Basic ' + atob('karaf:karaf'));
+            	    },
+				
+// 				    headers: {
+// 				        'Authorization': 'Basic ' + btoa('karaf:karaf')
+// 				    },
+            	 url: "http://10.76.190.84:8181/onos/v1/devices",
+                 type: "GET",                 
+// 				 beforeSend: function (xhr) {
+//     					xhr.setRequestHeader ("Authorization", "Basic " + btoa("karaf:karaf"));
+// 				 	},
+                 success: function () {
+                     alert('success');
+                 },
+                 error: function (xhr, ajaxOptions, thrownError) { //Add these parameters to display the required response
+                     alert(xhr.status);
+                     alert(xhr.responseText);
+                 }
+             });
+         });
+
+    	</script>
+	</head>
+
+	<body>
+		<p class="greeting-id">The ID is </p>
+        <p class="greeting-content">The content is </p>
+         
+		<div ng-controller="Hello">			
+			<p>The content is {{greeting.id}}</p>
+			
+		</div>
+		
+	</body>
+</html>
