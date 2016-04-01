@@ -37,40 +37,40 @@ public class PortsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		PrintWriter out = response.getWriter();
-//		String DeviceID = request.getParameter("deviceid");
-//		String url = "http://10.76.190.80:8181/onos/v1/devices/" + DeviceID + "/ports";
-//		
-//		URL obj = new URL(url);		
-//		
-//		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-//		String userpass = "karaf:karaf";
-//		String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
-//		con.setRequestProperty ("Authorization",basicAuth);
-//		
-//		BufferedReader in = new BufferedReader(
-//				    		        new InputStreamReader(con.getInputStream()));		
-//		String inputLine;
-//		StringBuffer responsestr = new StringBuffer();
-//
-//		while ((inputLine = in.readLine()) != null) {
-//			responsestr.append(inputLine);
-//		}
-//		try {
-//			in.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}	
+		PrintWriter out = response.getWriter();
+		String DeviceID = request.getParameter("deviceid");
+		String url = "http://10.76.190.84:8181/onos/v1/devices/" + DeviceID + "/ports";
+		
+		URL obj = new URL(url);		
+		
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		String userpass = "karaf:karaf";
+		String basicAuth = "Basic " + new String(new Base64().encode(userpass.getBytes()));
+		con.setRequestProperty ("Authorization",basicAuth);
+		
+		BufferedReader in = new BufferedReader(
+		new InputStreamReader(con.getInputStream()));		
+		String inputLine;
+		StringBuffer responsestr = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			responsestr.append(inputLine);
+		}
+		try {
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 		
 		SshCommandsAdaptor sobj = new SshCommandsAdaptor();
-		Session session = sobj.createSshSession("root","root","192.168.2.189");
-		String qos = sobj.getQosId(session, "eth0.1");
+		Session session = sobj.createSshSession("training","Test@123","10.76.190.84");
+		String qos = sobj.getQosId(session, "virbr0");
 		String que = sobj.getQueueId(session, qos);
 		String rate = sobj.getQueueMaxRate(session, que);
 		
-		System.out.println(rate);
+		System.out.println("-----------------------------------------Rate:"+rate);
 		
-		//out.print(responsestr.toString());		
+		out.print(responsestr.toString());		
 	}
 
 	/**

@@ -48,8 +48,7 @@ $(document).ready(function(){
                         alert(xhr.statusText);
                         alert(xhr.responseText);
                     }
-                });
-                
+                });       
             });        	
         	table1 += '<br> <br> <img src="images/switch.jpg" width="250px">';
         	

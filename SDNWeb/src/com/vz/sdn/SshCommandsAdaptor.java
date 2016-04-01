@@ -15,18 +15,39 @@ public class SshCommandsAdaptor{
 
       Session session = policy.createSshSession("root","root","192.168.2.189");
       String portname = "eth0.1"; 
+      String qostype = "linux-htb";
+      String bandwidth = "2000000";
+      policy.createQosToPort(session,portname,qostype,bandwidth);
+      policy.removePortQos(session,portname);
+      policy.getPortBandwidthRate(session,portname);
+      /*
       String qosId=policy.getQosId(session,portname);
       System.out.println(qosId);
       String queueId=policy.getQueueId(session,qosId);
       System.out.println("queueId " + queueId);
       String queueRate=policy.getQueueMaxRate(session,queueId);
       System.out.println("rate " + queueRate);
+     */
       session.disconnect();
     }
     catch(Exception e){
       System.out.println(e);
     }
      
+  }
+  public String createQosToPort(Session sessn, String portname,String qostype, String bandwidth)
+  {
+      String portname1 = portname.replaceAll("[./]","_");
+      String qosname = portname1+"_qos";
+      String queuenum = "0";
+      String cmd = "ovs-vsctl -- set Port " + portname +
+            " qos=@" +qosname+ " -- --id=@"+ qosname+
+            " create QoS type="+ qostype + " queues="+ queuenum+  "=@q_" +
+              bandwidth +" -- --id=@q_" + bandwidth +
+         " create Queue other-config:min-rate=" + bandwidth+ " other-config:max-rate=" + bandwidth;
+      System.out.println(cmd);
+      runcommand(sessn,cmd);
+      return "SUCESS";
   }
   public String getQosId(Session sessn, String portname)
   {
@@ -35,6 +56,14 @@ public class SshCommandsAdaptor{
       String qosId=runcommand(sessn,cmd);
       return qosId;
   }
+  public String getPortBandwidthRate(Session sessn, String portname)
+  {
+      String qosId=getQosId(sessn,portname);
+      String queueId=getQueueId(sessn,qosId);
+      String queueRate=getQueueMaxRate(sessn,queueId);
+      System.out.println(queueRate);
+      return queueRate;
+  }
   public String getQueueId(Session sessn, String qosId)
   {
       String cmd1 = "ovs-vsctl list qos " + qosId + " | grep queues | sed -e 's/\\}//g' | awk -F= '{print $2}'";
@@ -42,6 +71,38 @@ public class SshCommandsAdaptor{
       System.out.println(cmd1);
       String queueId=runcommand(sessn,cmd1);
       return queueId;
+  }
+  public String removeQueueById(Session sessn, String queueId)
+  {
+      String cmd1 = "ovs-vsctl -- destroy queue " + queueId ;
+      System.out.println(cmd1);
+      String result=runcommand(sessn,cmd1);
+      return "SUCCESS";
+  }
+  public String removeQosById(Session sessn, String qosId)
+  {
+      String cmd1 = "ovs-vsctl -- destroy qos " + qosId ;
+      System.out.println(cmd1);
+      String queueId=runcommand(sessn,cmd1);
+      return "SUCCESS";
+ }
+  public String removeQosFromPort(Session sessn, String portname)
+  {
+      String cmd1 = "ovs-vsctl clear port " + portname + " qos";
+      System.out.println(cmd1);
+      String queueId=runcommand(sessn,cmd1);
+      return "SUCCESS";
+  }
+  public String removePortQos(Session sessn, String portname)
+  {
+      System.out.println("Inside the removePortQos");
+      String qosId=getQosId(sessn,portname);
+      String queueId=getQueueId(sessn,qosId);
+      String output=removeQosFromPort(sessn,portname);
+      output=removeQosById(sessn,qosId);
+      output=removeQueueById(sessn, queueId);
+      System.out.println("Exiting the removePortQos");
+      return "SUCCESS";
   }
   public String getQueueMaxRate(Session sessn, String queueId)
   {
@@ -111,7 +172,7 @@ public class SshCommandsAdaptor{
           //buf.append("exit-status: "+channel.getExitStatus());
           break;
         }
-        try{Thread.sleep(1000);}catch(Exception ee){}
+        try{Thread.sleep(10);}catch(Exception ee){}
       }
       return buf.toString();
   }

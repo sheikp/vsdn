@@ -38,7 +38,7 @@ public class HostsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		String url = "http://10.76.190.80:8181/onos/v1/hosts";
+		String url = "http://10.76.190.84:8181/onos/v1/hosts";
 		
 		URL obj = new URL(url);		
 		

@@ -1,10 +1,17 @@
 package SSHKeyFunction;
 
+import com.vz.sdn.SshCommandsAdaptor;
+
 public class CAllApply {
 	public static void main(String[] args) {
 		
 		System.out.println("hiii");
+		SetPolicy sp=new SetPolicy();
+		sp.func("virbr0");
 		
+		SshCommandsAdaptor sca= new SshCommandsAdaptor();
+		
+	
 	}
 
 }

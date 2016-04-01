@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.omg.CORBA.portable.OutputStream;
 
+import SSHKeyFunction.SetPolicy;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +59,7 @@ public class DevicesServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		PrintWriter out = response.getWriter();
-		String url = "http://10.76.190.80:8181/onos/v1/devices";
+		String url = "http://10.76.190.84:8181/onos/v1/devices";
 		
 		URL obj = new URL(url);		
 		
@@ -80,6 +82,8 @@ public class DevicesServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		/*SetPolicy sp=new SetPolicy();
+		sp.func("virbr0");*/
 	
 		out.print(responsestr.toString());		
 		
